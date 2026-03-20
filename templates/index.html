@@ -350,12 +350,24 @@ function renderResult(boxId, data) {
   // Survival KM table
   if(data.km_table){
     let html=`<div class="result-grid">`;
-    html+=`<div class="result-item"><div class="result-label">Total n</div><div class="result-value">${data.n}</div></div>`;
+    html+=`<div class="result-item"><div class="result-label">Total n</div><div class="result-value">${data.n_total}</div></div>`;
     html+=`<div class="result-item"><div class="result-label">Total Events</div><div class="result-value red">${data.total_events}</div></div>`;
+    html+=`<div class="result-item"><div class="result-label">Total Censored</div><div class="result-value purple">${data.total_censored}</div></div>`;
     html+=`<div class="result-item"><div class="result-label">Median Survival</div><div class="result-value gold">${data.median_survival}</div></div>`;
     html+=`</div>`;
-    html+=`<div class="table-wrap"><table><thead><tr><th>Time t</th><th>At Risk</th><th>Events (d)</th><th>S(t)</th></tr></thead><tbody>`;
-    data.km_table.forEach(r=>{html+=`<tr><td>${r.time}</td><td>${r.at_risk}</td><td>${r.events_d}</td><td>${r['survival_S(t)']}</td></tr>`;});
+    if(data.formula) html+=`<div class="result-eq">${data.formula}</div>`;
+    html+=`<div class="table-wrap"><table><thead><tr><th>Time t</th><th>At Risk (nj)</th><th>Deaths (dj)</th><th>Censored</th><th>(nj-dj)/nj</th><th>Ŝ(t)</th></tr></thead><tbody>`;
+    data.km_table.forEach(r=>{
+      const isDeath = r['deaths_dj'] > 0;
+      html+=`<tr>
+        <td>${r.time}</td>
+        <td>${r['at_risk_nj']}</td>
+        <td style="color:${isDeath?'var(--accent2)':'var(--muted)'}">${r['deaths_dj']}</td>
+        <td style="color:var(--purple)">${r['censored']}</td>
+        <td>${r['factor_(nj-dj)/nj']}</td>
+        <td style="color:var(--accent);font-weight:600">${r['S_hat_t']}</td>
+      </tr>`;
+    });
     html+=`</tbody></table></div>`;
     box.innerHTML=html;return;
   }

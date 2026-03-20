@@ -354,18 +354,63 @@ def calc_survival(times_str, events_str):
     events = [int(x) for x in parse_numbers(events_str)]
     if len(times) != len(events): return {"error": "Times and events must have equal length."}
     n = len(times)
-    # Sort by time
-    paired = sorted(zip(times, events))
-    # Kaplan-Meier
-    rows = []; S = 1.0; at_risk = n
-    unique_times = sorted(set(t for t,e in paired if e==1))
-    for t in unique_times:
-        d = sum(1 for ti,ei in paired if ti==t and ei==1)
-        S = S * (1 - d/at_risk)
-        rows.append({"time": t, "at_risk": at_risk, "events_d": d, "survival_S(t)": round(S,6)})
-        at_risk -= sum(1 for ti,ei in paired if ti==t)
-    median_surv = next((r["time"] for r in rows if r["survival_S(t)"] <= 0.5), "Not reached")
-    return {"km_table": rows, "median_survival": median_surv, "n": n, "total_events": sum(events)}
+
+    # Sort by time (censored after events at same time)
+    paired = sorted(zip(times, events), key=lambda x: (x[0], x[1]))
+
+    # Kaplan-Meier: Ŝ(t+) = ∏ (nj - dj) / nj  for all j: tj <= t
+    # Build ordered event list
+    rows = []
+    S = 1.0
+    at_risk = n
+    i = 0
+    all_times = [p[0] for p in paired]
+    all_events = [p[1] for p in paired]
+
+    processed = set()
+    for idx, (t, e) in enumerate(paired):
+        if t in processed:
+            continue
+        processed.add(t)
+        # Count events (d) and total at this time point
+        nj = sum(1 for ti in all_times if ti >= t)   # at risk at time t
+        dj = sum(1 for ti, ei in paired if ti == t and ei == 1)  # deaths at t
+        cj = sum(1 for ti, ei in paired if ti == t and ei == 0)  # censored at t
+        label = f"{t}+" if cj > 0 and dj == 0 else str(t)
+
+        if dj > 0:
+            factor = (nj - dj) / nj
+            S = S * factor
+            rows.append({
+                "time": label,
+                "at_risk_nj": nj,
+                "deaths_dj": dj,
+                "censored": cj,
+                "factor_(nj-dj)/nj": round((nj - dj) / nj, 6),
+                "S_hat_t": round(S, 6),
+            })
+        else:
+            # Censored only — S does not change, show row
+            rows.append({
+                "time": label,
+                "at_risk_nj": nj,
+                "deaths_dj": 0,
+                "censored": cj,
+                "factor_(nj-dj)/nj": "—",
+                "S_hat_t": round(S, 6),
+            })
+
+    # Median survival: smallest t where S(t) <= 0.5
+    median_surv = next((r["time"] for r in rows if isinstance(r["S_hat_t"], float) and r["S_hat_t"] <= 0.5), "Not reached")
+
+    return {
+        "km_table": rows,
+        "median_survival": median_surv,
+        "n_total": n,
+        "total_events": sum(events),
+        "total_censored": n - sum(events),
+        "formula": "S_hat(t+) = product of (nj - dj)/nj for all tj <= t",
+    }
 
 # ── 17. OLS Regression with Diagnostics (AST 404) ────────────────────────────
 def calc_ols(x_vals, y_vals):
