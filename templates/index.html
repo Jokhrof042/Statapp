@@ -78,6 +78,7 @@ tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
 .plot-btn:hover{background:rgba(116,185,255,0.2);}
 </style>
 <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
 <div class="header">
@@ -473,6 +474,7 @@ async function calc(type){
     const ids={descriptive:'d-result',permcomb:'pc-result',binomial:'b-result',normal:'n-result',regression:'r-result',corrmatrix:'cm-result',ztest:'z-result',ttest:'t-result',ci:'ci-result',index:'i-result',lifetable:'lt-result',markov:'mk-result',timeseries:'ts-result',logistic:'lr-result',pca:'pca-result',survival:'sv-result',ols:'ols-result'};
     lastPayload[type]=payload;
     const data=await post(payload);
+    lastResult[type]=data;
     renderResult(ids[type],data);
     // show plot button
     const plotBoxId=ids[type].replace('-result','-plot');
@@ -481,26 +483,157 @@ async function calc(type){
   }catch(e){console.error(e);}
 }
 
-// Store last payload per section
+// Store last payload + results
 const lastPayload = {};
+const lastResult = {};
 
-async function showPlot(type, boxId) {
-  const payload = lastPayload[type];
-  if (!payload) return;
+function showPlot(type, boxId) {
   const box = document.getElementById(boxId);
-  box.innerHTML = '<div style="color:var(--muted);padding:20px;text-align:center;">Loading chart...</div>';
+  const payload = lastPayload[type];
+  const result = lastResult[type];
+  if (!payload || !result) {
+    box.innerHTML = '<div class="result-error">Please calculate first, then click Show Plot.</div>';
+    box.className = 'plot-box show'; return;
+  }
   box.className = 'plot-box show';
+  // Destroy old chart if exists
+  const oldChart = Chart.getChart(boxId + '-canvas');
+  if (oldChart) oldChart.destroy();
+  const canvas = document.createElement('canvas');
+  canvas.id = boxId + '-canvas';
+  canvas.style.maxHeight = '360px';
+  box.innerHTML = ''; box.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  const C = { green:'#00d4aa', blue:'#74b9ff', yellow:'#ffd166', red:'#ff6b6b', purple:'#bc8cff', muted:'#6b7a99' };
+  const nums = s => s ? String(s).replace(/,/g,' ').split(' ').filter(Boolean).map(Number) : [];
+  const gridColor = '#252c3a', textColor = '#e8edf5', mutedColor = '#6b7a99';
+  const baseOpts = {responsive:true, maintainAspectRatio:true,
+    plugins:{legend:{labels:{color:textColor}}, title:{display:true,color:textColor}},
+    scales:{x:{ticks:{color:mutedColor},grid:{color:gridColor}}, y:{ticks:{color:mutedColor},grid:{color:gridColor}}}
+  };
+
   try {
-    const res = await fetch('/plot', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)});
-    const text = await res.text();
-    let data;
-    try { data = JSON.parse(text); }
-    catch(e) { box.innerHTML = `<div class="result-error">Server error — check Render logs.<br><small>${text.substring(0,200)}</small></div>`; return; }
-    if (data.error) { box.innerHTML = `<div class="result-error">Chart error: ${data.error}</div>`; return; }
-    let figData;
-    if (typeof data.plot === 'string') { figData = JSON.parse(data.plot); } else { figData = data.plot; }
-    Plotly.react(box, figData.data, figData.layout, {responsive: true, displayModeBar: true, scrollZoom: true});
-  } catch(e) { box.innerHTML = `<div class="result-error">Chart failed: ${e}</div>`; }
+    if (type === 'descriptive') {
+      const data = nums(payload.numbers).sort((a,b)=>a-b);
+      new Chart(ctx, {type:'bar', data:{labels:data.map((_,i)=>i+1), datasets:[{label:'Values', data, backgroundColor:C.green+'99', borderColor:C.green, borderWidth:1}]},
+        options:{...baseOpts, plugins:{...baseOpts.plugins, title:{display:true,text:'Data Values',color:textColor}}}});
+    }
+    else if (type === 'binomial') {
+      const n=parseInt(payload.n), p=parseFloat(payload.p), k=parseInt(payload.k);
+      const ks=[...Array(n+1).keys()];
+      const fact=x=>{let r=1;for(let i=2;i<=x;i++)r*=i;return r;};
+      const pmf=kk=>fact(n)/(fact(kk)*fact(n-kk))*Math.pow(p,kk)*Math.pow(1-p,n-kk);
+      new Chart(ctx, {type:'bar', data:{labels:ks, datasets:[{label:'P(X=k)', data:ks.map(pmf),
+        backgroundColor:ks.map(kk=>kk===k?C.red+'cc':C.green+'99'), borderColor:ks.map(kk=>kk===k?C.red:C.green), borderWidth:1}]},
+        options:{...baseOpts, plugins:{...baseOpts.plugins, legend:{display:false}, title:{display:true,text:'Binomial PMF (red = selected k)',color:textColor}},
+          scales:{x:{title:{display:true,text:'k',color:mutedColor},ticks:{color:mutedColor},grid:{color:gridColor}},
+                  y:{title:{display:true,text:'P(X=k)',color:mutedColor},ticks:{color:mutedColor},grid:{color:gridColor}}}}});
+    }
+    else if (type === 'normal') {
+      const mean=parseFloat(payload.mean), std=parseFloat(payload.std);
+      const xs=[...Array(100)].map((_,i)=>mean-4*std+i*8*std/99);
+      const pdf=x=>Math.exp(-0.5*((x-mean)/std)**2)/(std*Math.sqrt(2*Math.PI));
+      new Chart(ctx, {type:'line', data:{labels:xs.map(x=>x.toFixed(2)), datasets:[{label:'PDF', data:xs.map(pdf),
+        borderColor:C.blue, backgroundColor:C.blue+'33', fill:true, pointRadius:0, borderWidth:2}]},
+        options:{...baseOpts, plugins:{...baseOpts.plugins, title:{display:true,text:'Normal Distribution',color:textColor}},
+          scales:{x:{ticks:{maxTicksLimit:8,color:mutedColor},grid:{color:gridColor}}, y:{ticks:{color:mutedColor},grid:{color:gridColor}}}}});
+    }
+    else if (type === 'regression' || type === 'ols') {
+      const xv=nums(payload.x), yv=nums(payload.y);
+      const n=xv.length, sx=xv.reduce((a,b)=>a+b,0), sy=yv.reduce((a,b)=>a+b,0);
+      const sxy=xv.reduce((s,x,i)=>s+x*yv[i],0), sx2=xv.reduce((s,x)=>s+x*x,0);
+      const d=n*sx2-sx*sx, b1=(n*sxy-sx*sy)/d, b0=(sy-b1*sx)/n;
+      new Chart(ctx, {type:'scatter', data:{datasets:[
+        {label:'Data', data:xv.map((x,i)=>({x,y:yv[i]})), backgroundColor:C.green, pointRadius:7},
+        {label:'Fit Line', data:[{x:Math.min(...xv),y:b1*Math.min(...xv)+b0},{x:Math.max(...xv),y:b1*Math.max(...xv)+b0}],
+          type:'line', borderColor:C.yellow, pointRadius:0, borderWidth:2}]},
+        options:{...baseOpts, plugins:{...baseOpts.plugins, title:{display:true,text:'Scatter + Regression Line',color:textColor}}}});
+    }
+    else if (type === 'timeseries') {
+      const data=nums(payload.numbers), mo=parseInt(payload.ma_order)||3;
+      const n=data.length, tv=[...Array(n)].map((_,i)=>i+1);
+      const ma=data.slice(mo-1).map((_,i)=>data.slice(i,i+mo).reduce((a,b)=>a+b,0)/mo);
+      const st=tv.reduce((a,b)=>a+b,0), sy2=data.reduce((a,b)=>a+b,0);
+      const st2=tv.reduce((s,t)=>s+t*t,0), sty=tv.reduce((s,t,i)=>s+t*data[i],0);
+      const dd=n*st2-st*st, sl=(n*sty-st*sy2)/dd, ic=(sy2-sl*st)/n;
+      new Chart(ctx, {type:'line', data:{labels:tv, datasets:[
+        {label:'Observed', data, borderColor:C.blue, pointRadius:3, borderWidth:2, backgroundColor:'transparent'},
+        {label:'MA('+mo+')', data:[...Array(mo-1).fill(null),...ma], borderColor:C.green, pointRadius:0, borderWidth:2, borderDash:[5,3], backgroundColor:'transparent'},
+        {label:'Trend', data:tv.map(t=>sl*t+ic), borderColor:C.yellow, pointRadius:0, borderWidth:1.5, borderDash:[8,4], backgroundColor:'transparent'}]},
+        options:{...baseOpts, plugins:{...baseOpts.plugins, title:{display:true,text:'Time Series Analysis',color:textColor}}}});
+    }
+    else if (type === 'survival') {
+      if (!result.km_table) { box.innerHTML='<div class="result-note">No data</div>'; return; }
+      const km=result.km_table;
+      const tx=[0,...km.map(r=>parseFloat(String(r.time).replace('+','')))];
+      const sv=[1,...km.map(r=>r.S_hat_t)];
+      new Chart(ctx, {type:'line', data:{labels:tx, datasets:[{label:'S(t)', data:sv,
+        borderColor:C.green, backgroundColor:C.green+'33', fill:true, stepped:true, pointRadius:4, borderWidth:2}]},
+        options:{...baseOpts, plugins:{...baseOpts.plugins, title:{display:true,text:'Kaplan-Meier Survival Curve',color:textColor}},
+          scales:{x:{title:{display:true,text:'Time',color:mutedColor},ticks:{color:mutedColor},grid:{color:gridColor}},
+                  y:{title:{display:true,text:'S(t)',color:mutedColor},min:0,max:1,ticks:{color:mutedColor},grid:{color:gridColor}}}}});
+    }
+    else if (type === 'markov') {
+      if (!result.history) { box.innerHTML='<div class="result-note">No data</div>'; return; }
+      const h=result.history, colors=[C.green,C.blue,C.yellow,C.red,C.purple];
+      new Chart(ctx, {type:'line', data:{labels:h.map((_,i)=>i),
+        datasets:h[0].map((_,s)=>({label:'State '+(s+1), data:h.map(r=>r[s]),
+          borderColor:colors[s%colors.length], backgroundColor:'transparent', pointRadius:3, borderWidth:2}))},
+        options:{...baseOpts, plugins:{...baseOpts.plugins, title:{display:true,text:'Markov Chain',color:textColor}},
+          scales:{x:{title:{display:true,text:'Step',color:mutedColor},ticks:{color:mutedColor},grid:{color:gridColor}},
+                  y:{min:0,max:1,ticks:{color:mutedColor},grid:{color:gridColor}}}}});
+    }
+    else if (type === 'corrmatrix') {
+      if (!result.correlation_matrix) { box.innerHTML='<div class="result-note">No data</div>'; return; }
+      const mat=result.correlation_matrix, k=mat.length, labels=[...Array(k)].map((_,i)=>'V'+(i+1));
+      new Chart(ctx, {type:'bar', data:{labels, datasets:labels.map((l,i)=>({label:l, data:mat[i],
+        backgroundColor:mat[i].map(v=>v>0?'rgba(0,212,170,'+(Math.abs(v)*0.7)+')':'rgba(255,107,107,'+(Math.abs(v)*0.7)+')')}))},
+        options:{...baseOpts, plugins:{...baseOpts.plugins, title:{display:true,text:'Correlation Matrix',color:textColor}},
+          scales:{x:{ticks:{color:mutedColor},grid:{color:gridColor}}, y:{min:-1,max:1,ticks:{color:mutedColor},grid:{color:gridColor}}}}});
+    }
+    else if (type === 'pca') {
+      const pv=result['proportion_of_variance_%'];
+      if (!pv) { box.innerHTML='<div class="result-note">No data</div>'; return; }
+      const labels=pv.map((_,i)=>'V'+(i+1));
+      new Chart(ctx, {type:'bar', data:{labels, datasets:[{label:'Variance %', data:pv,
+        backgroundColor:C.purple+'99', borderColor:C.purple, borderWidth:1}]},
+        options:{...baseOpts, plugins:{...baseOpts.plugins, title:{display:true,text:'PCA Variance Explained (%)',color:textColor}}}});
+    }
+    else if (type === 'lifetable') {
+      if (!result.life_table) { box.innerHTML='<div class="result-note">No data</div>'; return; }
+      const lt=result.life_table;
+      new Chart(ctx, {type:'line', data:{labels:lt.map(r=>r.age_x), datasets:[
+        {label:'Survivors lx', data:lt.map(r=>r.lx), borderColor:C.green, backgroundColor:C.green+'33', fill:true, pointRadius:3, borderWidth:2}]},
+        options:{...baseOpts, plugins:{...baseOpts.plugins, title:{display:true,text:'Life Table — Survivors lx',color:textColor}},
+          scales:{x:{title:{display:true,text:'Age',color:mutedColor},ticks:{color:mutedColor},grid:{color:gridColor}},
+                  y:{ticks:{color:mutedColor},grid:{color:gridColor}}}}});
+    }
+    else if (type === 'index') {
+      const bp=nums(payload.base_prices), cp=nums(payload.current_prices), labels=bp.map((_,i)=>'Item '+(i+1));
+      new Chart(ctx, {type:'bar', data:{labels, datasets:[
+        {label:'Base Price', data:bp, backgroundColor:C.blue+'99', borderColor:C.blue, borderWidth:1},
+        {label:'Current Price', data:cp, backgroundColor:C.yellow+'99', borderColor:C.yellow, borderWidth:1}]},
+        options:{...baseOpts, plugins:{...baseOpts.plugins, title:{display:true,text:'Price Comparison',color:textColor}}}});
+    }
+    else if (type === 'ci') {
+      const data=nums(payload.numbers), lo=result.lower_bound, hi=result.upper_bound, mean=result.sample_mean;
+      new Chart(ctx, {type:'scatter', data:{datasets:[
+        {label:'Data', data:data.map((y,i)=>({x:y,y:i+1})), backgroundColor:C.blue, pointRadius:7},
+        {label:'CI', data:[{x:lo,y:0},{x:hi,y:0}], type:'line', borderColor:C.green, borderWidth:5, pointRadius:5},
+        {label:'Mean', data:[{x:mean,y:0},{x:mean,y:data.length+1}], type:'line', borderColor:C.yellow, borderWidth:2, pointRadius:0, borderDash:[5,3]}]},
+        options:{...baseOpts, plugins:{...baseOpts.plugins, title:{display:true,text:payload.confidence+'% Confidence Interval',color:textColor}}}});
+    }
+    else if (type === 'ztest' || type === 'ttest') {
+      const stat=parseFloat(result.z_statistic||result.t_statistic||0);
+      const xs=[...Array(100)].map((_,i)=>-4+i*8/99);
+      const ys=xs.map(x=>Math.exp(-0.5*x*x)/Math.sqrt(2*Math.PI));
+      new Chart(ctx, {type:'line', data:{labels:xs.map(x=>x.toFixed(2)), datasets:[
+        {label:'Distribution', data:ys, borderColor:C.blue, backgroundColor:C.blue+'22', fill:true, pointRadius:0, borderWidth:2}]},
+        options:{...baseOpts, plugins:{...baseOpts.plugins, title:{display:true,text:'Test Statistic = '+stat.toFixed(3),color:textColor}},
+          scales:{x:{ticks:{maxTicksLimit:8,color:mutedColor},grid:{color:gridColor}}, y:{ticks:{color:mutedColor},grid:{color:gridColor}}}}});
+    }
+    else { box.innerHTML = '<div class="result-note">No chart available for this section.</div>'; }
+  } catch(e) { box.innerHTML = '<div class="result-error">Chart error: ' + e.message + '</div>'; }
 }
 
 document.addEventListener('keydown',e=>{if(e.key==='Enter'){const btn=document.querySelector('.section.active .calc-btn');if(btn)btn.click();}});
