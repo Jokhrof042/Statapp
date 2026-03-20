@@ -10,420 +10,422 @@
 :root{
   --bg:#0b0e13;--surface:#12161e;--card:#181d28;--border:#252c3a;
   --accent:#00d4aa;--accent2:#ff6b6b;--accent3:#ffd166;--accent4:#74b9ff;
-  --text:#e8edf5;--muted:#6b7a99;--radius:14px;
+  --purple:#bc8cff;--text:#e8edf5;--muted:#6b7a99;--radius:14px;
 }
 body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;}
-
-/* Header */
-.header{background:var(--surface);border-bottom:1px solid var(--border);padding:18px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:2px;background:linear-gradient(90deg,var(--accent),var(--accent4));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.badge{font-size:0.72rem;background:rgba(0,212,170,0.12);border:1px solid rgba(0,212,170,0.25);color:var(--accent);border-radius:20px;padding:4px 12px;letter-spacing:0.05em;}
-
-/* Layout */
+.header{background:var(--surface);border-bottom:1px solid var(--border);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:2px;background:linear-gradient(90deg,var(--accent),var(--accent4));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.badge{font-size:0.7rem;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.2);color:var(--accent);border-radius:20px;padding:4px 12px;letter-spacing:0.04em;}
 .layout{display:flex;flex:1;min-height:0;}
-.sidebar{width:230px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);padding:16px 10px;overflow-y:auto;}
-.main{flex:1;padding:28px;overflow-y:auto;}
-
-/* Sidebar groups */
-.group-label{font-size:0.65rem;font-weight:600;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase;padding:10px 10px 6px;margin-top:8px;}
-.nav-btn{display:flex;align-items:center;gap:9px;width:100%;padding:9px 12px;border-radius:10px;border:1px solid transparent;background:transparent;color:var(--muted);font-family:'Outfit',sans-serif;font-size:0.82rem;font-weight:500;cursor:pointer;transition:all 0.18s;text-align:left;}
+.sidebar{width:220px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);padding:12px 8px;overflow-y:auto;}
+.main{flex:1;padding:24px;overflow-y:auto;}
+.group-label{font-size:0.62rem;font-weight:700;letter-spacing:0.12em;color:var(--muted);text-transform:uppercase;padding:10px 10px 5px;margin-top:6px;}
+.year-badge{font-size:0.58rem;background:rgba(188,140,255,0.15);border:1px solid rgba(188,140,255,0.25);color:var(--purple);border-radius:4px;padding:1px 5px;margin-left:4px;vertical-align:middle;}
+.nav-btn{display:flex;align-items:center;gap:8px;width:100%;padding:8px 10px;border-radius:8px;border:1px solid transparent;background:transparent;color:var(--muted);font-family:'Outfit',sans-serif;font-size:0.8rem;font-weight:500;cursor:pointer;transition:all 0.18s;text-align:left;}
 .nav-btn:hover{background:var(--card);color:var(--text);}
-.nav-btn.active{background:rgba(0,212,170,0.1);border-color:rgba(0,212,170,0.25);color:var(--accent);}
-.nav-icon{font-size:1rem;width:20px;text-align:center;flex-shrink:0;}
-
-/* Sections */
-.section{display:none;animation:fadeIn 0.3s ease;}
+.nav-btn.active{background:rgba(0,212,170,0.08);border-color:rgba(0,212,170,0.2);color:var(--accent);}
+.nav-icon{font-size:0.95rem;width:18px;text-align:center;flex-shrink:0;}
+.section{display:none;animation:fadeIn 0.3s ease;max-width:860px;}
 .section.active{display:block;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
-
-.section-header{margin-bottom:24px;}
-.section-title{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:1px;color:var(--accent);margin-bottom:4px;}
-.section-sub{color:var(--muted);font-size:0.83rem;line-height:1.5;}
-.course-tag{display:inline-block;font-size:0.68rem;background:rgba(116,185,255,0.1);border:1px solid rgba(116,185,255,0.25);color:var(--accent4);border-radius:6px;padding:2px 8px;margin-left:8px;vertical-align:middle;}
-
-/* Form controls */
-label{display:block;font-size:0.75rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px;}
-input[type="text"],input[type="number"],select,textarea{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-family:'DM Mono',monospace;font-size:0.87rem;outline:none;transition:border-color 0.2s,box-shadow 0.2s;margin-bottom:14px;}
+.section-header{margin-bottom:20px;}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:1px;color:var(--accent);margin-bottom:3px;}
+.section-sub{color:var(--muted);font-size:0.82rem;line-height:1.5;}
+.course-tag{display:inline-block;font-size:0.66rem;background:rgba(116,185,255,0.1);border:1px solid rgba(116,185,255,0.2);color:var(--accent4);border-radius:5px;padding:2px 7px;margin-left:6px;vertical-align:middle;}
+.yr4-tag{background:rgba(188,140,255,0.1);border-color:rgba(188,140,255,0.25);color:var(--purple);}
+label{display:block;font-size:0.73rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px;}
+input[type="text"],input[type="number"],select,textarea{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:9px 13px;color:var(--text);font-family:'DM Mono',monospace;font-size:0.85rem;outline:none;transition:border-color 0.2s,box-shadow 0.2s;margin-bottom:13px;}
 textarea{resize:vertical;min-height:80px;}
 input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,212,170,0.1);}
-input::placeholder,textarea::placeholder{color:var(--muted);}
-
-.row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
-
-.radio-group{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px;}
-.radio-group label{display:flex;align-items:center;gap:6px;font-size:0.84rem;text-transform:none;letter-spacing:0;color:var(--text);cursor:pointer;margin:0;}
+input::placeholder,textarea::placeholder{color:var(--muted);font-size:0.8rem;}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px;}
+.radio-group{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:13px;}
+.radio-group label{display:flex;align-items:center;gap:6px;font-size:0.82rem;text-transform:none;letter-spacing:0;color:var(--text);cursor:pointer;margin:0;}
 .radio-group input[type="radio"]{width:auto;padding:0;margin:0;accent-color:var(--accent);}
-
-.calc-btn{background:linear-gradient(135deg,var(--accent),#00a884);border:none;border-radius:10px;padding:11px 26px;color:#000;font-family:'Outfit',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;transition:opacity 0.2s,transform 0.15s;margin-top:4px;}
+.calc-btn{background:linear-gradient(135deg,var(--accent),#00a884);border:none;border-radius:9px;padding:10px 24px;color:#000;font-family:'Outfit',sans-serif;font-weight:700;font-size:0.88rem;cursor:pointer;transition:opacity 0.2s,transform 0.15s;margin-top:2px;}
 .calc-btn:hover{opacity:0.88;transform:translateY(-1px);}
-.calc-btn:active{transform:translateY(0);}
-
-/* Results */
-.result-box{margin-top:22px;display:none;}
+.result-box{margin-top:20px;display:none;}
 .result-box.show{display:block;animation:fadeIn 0.3s ease;}
-
-.result-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;margin-bottom:12px;}
-.result-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;}
-.result-label{font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;}
-.result-value{font-family:'DM Mono',monospace;font-size:1rem;font-weight:500;color:var(--accent);}
-.result-value.highlight{color:var(--accent3);}
+.result-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:9px;margin-bottom:10px;}
+.result-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 13px;}
+.result-label{font-size:0.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;}
+.result-value{font-family:'DM Mono',monospace;font-size:0.98rem;font-weight:500;color:var(--accent);}
+.result-value.gold{color:var(--accent3);}
 .result-value.red{color:var(--accent2);}
-
-.result-eq{font-family:'DM Mono',monospace;font-size:0.95rem;color:var(--accent3);padding:10px 14px;background:rgba(255,209,102,0.07);border:1px solid rgba(255,209,102,0.2);border-radius:10px;margin-bottom:10px;}
-.result-error{color:var(--accent2);font-size:0.9rem;padding:14px;background:rgba(255,107,107,0.08);border:1px solid rgba(255,107,107,0.2);border-radius:10px;}
-
-/* Life table */
+.result-value.purple{color:var(--purple);}
+.result-eq{font-family:'DM Mono',monospace;font-size:0.9rem;color:var(--accent3);padding:9px 13px;background:rgba(255,209,102,0.07);border:1px solid rgba(255,209,102,0.18);border-radius:8px;margin-bottom:8px;word-break:break-all;}
+.result-error{color:var(--accent2);font-size:0.88rem;padding:13px;background:rgba(255,107,107,0.08);border:1px solid rgba(255,107,107,0.2);border-radius:10px;}
+.result-note{color:var(--muted);font-size:0.75rem;margin-top:8px;padding:8px 12px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid var(--border);}
 .table-wrap{overflow-x:auto;margin-top:10px;}
-table{width:100%;border-collapse:collapse;font-family:'DM Mono',monospace;font-size:0.82rem;}
-th{background:var(--card);border:1px solid var(--border);padding:8px 12px;color:var(--accent);text-align:center;}
-td{border:1px solid var(--border);padding:7px 12px;text-align:center;color:var(--text);}
+table{width:100%;border-collapse:collapse;font-family:'DM Mono',monospace;font-size:0.8rem;}
+th{background:var(--card);border:1px solid var(--border);padding:7px 11px;color:var(--accent);text-align:center;white-space:nowrap;}
+td{border:1px solid var(--border);padding:6px 11px;text-align:center;color:var(--text);}
 tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
-
-/* Corr matrix */
-.matrix-cell{display:inline-block;width:70px;padding:6px;text-align:center;border-radius:6px;font-family:'DM Mono',monospace;font-size:0.8rem;}
-
+.hint{font-size:0.75rem;color:var(--muted);margin-bottom:12px;padding:8px 12px;background:rgba(116,185,255,0.05);border:1px solid rgba(116,185,255,0.15);border-radius:8px;line-height:1.5;}
 @media(max-width:700px){
   .layout{flex-direction:column;}
-  .sidebar{width:100%;border-right:none;border-bottom:1px solid var(--border);display:flex;flex-wrap:wrap;padding:10px;gap:4px;}
+  .sidebar{width:100%;border-right:none;border-bottom:1px solid var(--border);display:flex;flex-wrap:wrap;padding:8px;gap:4px;max-height:180px;overflow-y:auto;}
   .group-label{display:none;}
-  .nav-btn{flex:1;min-width:100px;justify-content:center;}
+  .nav-btn{flex:1;min-width:90px;justify-content:center;font-size:0.72rem;}
   .row,.row3{grid-template-columns:1fr;}
+  .main{padding:16px;}
 }
 </style>
 </head>
 <body>
-
 <div class="header">
   <div class="logo">StatSolve</div>
   <div class="badge">ISRT · Applied Statistics · University of Dhaka</div>
 </div>
-
 <div class="layout">
-  <!-- Sidebar -->
-  <nav class="sidebar">
-    <div class="group-label">📐 Descriptive</div>
-    <button class="nav-btn active" onclick="show('descriptive',this)"><span class="nav-icon">📊</span>Descriptive Stats</button>
+<nav class="sidebar">
+  <div class="group-label">Descriptive</div>
+  <button class="nav-btn active" onclick="show('descriptive',this)"><span class="nav-icon">📊</span>Descriptive Stats</button>
 
-    <div class="group-label">🎲 Probability</div>
-    <button class="nav-btn" onclick="show('permcomb',this)"><span class="nav-icon">🔢</span>Perm & Comb</button>
-    <button class="nav-btn" onclick="show('binomial',this)"><span class="nav-icon">🎯</span>Binomial Dist</button>
-    <button class="nav-btn" onclick="show('normal',this)"><span class="nav-icon">🔔</span>Normal Dist</button>
+  <div class="group-label">Probability</div>
+  <button class="nav-btn" onclick="show('permcomb',this)"><span class="nav-icon">🔢</span>Perm & Comb</button>
+  <button class="nav-btn" onclick="show('binomial',this)"><span class="nav-icon">🎯</span>Binomial Dist</button>
+  <button class="nav-btn" onclick="show('normal',this)"><span class="nav-icon">🔔</span>Normal Dist</button>
 
-    <div class="group-label">📈 Regression</div>
-    <button class="nav-btn" onclick="show('regression',this)"><span class="nav-icon">📉</span>Linear Regression</button>
-    <button class="nav-btn" onclick="show('corrmatrix',this)"><span class="nav-icon">🔗</span>Correlation Matrix</button>
+  <div class="group-label">Regression</div>
+  <button class="nav-btn" onclick="show('regression',this)"><span class="nav-icon">📉</span>Linear Regression</button>
+  <button class="nav-btn" onclick="show('corrmatrix',this)"><span class="nav-icon">🔗</span>Correlation Matrix</button>
 
-    <div class="group-label">🔬 Inference</div>
-    <button class="nav-btn" onclick="show('ztest',this)"><span class="nav-icon">⚡</span>Z-Test</button>
-    <button class="nav-btn" onclick="show('ttest',this)"><span class="nav-icon">🧪</span>t-Test (1 sample)</button>
-    <button class="nav-btn" onclick="show('ci',this)"><span class="nav-icon">📏</span>Confidence Interval</button>
+  <div class="group-label">Inference</div>
+  <button class="nav-btn" onclick="show('ztest',this)"><span class="nav-icon">⚡</span>Z-Test</button>
+  <button class="nav-btn" onclick="show('ttest',this)"><span class="nav-icon">🧪</span>t-Test</button>
+  <button class="nav-btn" onclick="show('ci',this)"><span class="nav-icon">📏</span>Confidence Interval</button>
 
-    <div class="group-label">📦 Applied</div>
-    <button class="nav-btn" onclick="show('index',this)"><span class="nav-icon">💰</span>Index Numbers</button>
-    <button class="nav-btn" onclick="show('lifetable',this)"><span class="nav-icon">📋</span>Life Table</button>
-  </nav>
+  <div class="group-label">Applied</div>
+  <button class="nav-btn" onclick="show('index',this)"><span class="nav-icon">💰</span>Index Numbers</button>
+  <button class="nav-btn" onclick="show('lifetable',this)"><span class="nav-icon">📋</span>Life Table</button>
 
-  <!-- Main -->
-  <div class="main">
+  <div class="group-label">4th Year <span class="year-badge">AST 4xx</span></div>
+  <button class="nav-btn" onclick="show('markov',this)"><span class="nav-icon">🔄</span>Markov Chain</button>
+  <button class="nav-btn" onclick="show('timeseries',this)"><span class="nav-icon">📈</span>Time Series</button>
+  <button class="nav-btn" onclick="show('logistic',this)"><span class="nav-icon">🧮</span>Logistic Regression</button>
+  <button class="nav-btn" onclick="show('pca',this)"><span class="nav-icon">🔭</span>PCA</button>
+  <button class="nav-btn" onclick="show('survival',this)"><span class="nav-icon">⏱</span>Survival Analysis</button>
+  <button class="nav-btn" onclick="show('ols',this)"><span class="nav-icon">📐</span>OLS Diagnostics</button>
+</nav>
 
-    <!-- 1. Descriptive -->
-    <div id="descriptive" class="section active">
-      <div class="section-header">
-        <div class="section-title">Descriptive Statistics <span class="course-tag">AST 101</span></div>
-        <div class="section-sub">Full summary: mean, median, mode, variance, std dev, skewness, kurtosis, quartiles & more.</div>
-      </div>
-      <label>Numbers (comma or space separated)</label>
-      <input type="text" id="d-nums" placeholder="e.g. 12, 15, 18, 22, 25, 30, 14, 19"/>
-      <button class="calc-btn" onclick="calc('descriptive')">Calculate →</button>
-      <div class="result-box" id="d-result"></div>
+<div class="main">
+
+  <!-- Descriptive -->
+  <div id="descriptive" class="section active">
+    <div class="section-header"><div class="section-title">Descriptive Statistics <span class="course-tag">AST 101</span></div><div class="section-sub">Full summary: mean, median, mode, variance, std dev, skewness, kurtosis, quartiles and more.</div></div>
+    <label>Numbers (comma or space separated)</label>
+    <input type="text" id="d-nums" placeholder="e.g. 12, 15, 18, 22, 25, 30, 14, 19"/>
+    <button class="calc-btn" onclick="calc('descriptive')">Calculate</button>
+    <div class="result-box" id="d-result"></div>
+  </div>
+
+  <!-- Perm & Comb -->
+  <div id="permcomb" class="section">
+    <div class="section-header"><div class="section-title">Permutation & Combination <span class="course-tag">AST 102</span></div><div class="section-sub">Calculate nPr and nCr.</div></div>
+    <div class="row">
+      <div><label>n (total)</label><input type="number" id="pc-n" placeholder="e.g. 10" min="0"/></div>
+      <div><label>r (select)</label><input type="number" id="pc-r" placeholder="e.g. 3" min="0"/></div>
     </div>
+    <button class="calc-btn" onclick="calc('permcomb')">Calculate</button>
+    <div class="result-box" id="pc-result"></div>
+  </div>
 
-    <!-- 2. Permutation & Combination -->
-    <div id="permcomb" class="section">
-      <div class="section-header">
-        <div class="section-title">Permutation & Combination <span class="course-tag">AST 102</span></div>
-        <div class="section-sub">Calculate nPr (permutations) and nCr (combinations).</div>
-      </div>
-      <div class="row">
-        <div><label>n (total items)</label><input type="number" id="pc-n" placeholder="e.g. 10" min="0"/></div>
-        <div><label>r (selected)</label><input type="number" id="pc-r" placeholder="e.g. 3" min="0"/></div>
-      </div>
-      <button class="calc-btn" onclick="calc('permcomb')">Calculate →</button>
-      <div class="result-box" id="pc-result"></div>
+  <!-- Binomial -->
+  <div id="binomial" class="section">
+    <div class="section-header"><div class="section-title">Binomial Distribution <span class="course-tag">AST 102</span></div><div class="section-sub">Find P(X=k), mean and variance.</div></div>
+    <div class="row3">
+      <div><label>n (trials)</label><input type="number" id="b-n" placeholder="10" min="0"/></div>
+      <div><label>k (successes)</label><input type="number" id="b-k" placeholder="3" min="0"/></div>
+      <div><label>p (probability)</label><input type="number" id="b-p" placeholder="0.4" step="0.01" min="0" max="1"/></div>
     </div>
+    <button class="calc-btn" onclick="calc('binomial')">Calculate</button>
+    <div class="result-box" id="b-result"></div>
+  </div>
 
-    <!-- 3. Binomial -->
-    <div id="binomial" class="section">
-      <div class="section-header">
-        <div class="section-title">Binomial Distribution <span class="course-tag">AST 102</span></div>
-        <div class="section-sub">Find P(X=k) along with mean and variance of the distribution.</div>
-      </div>
-      <div class="row3">
-        <div><label>n (trials)</label><input type="number" id="b-n" placeholder="e.g. 10" min="0"/></div>
-        <div><label>k (successes)</label><input type="number" id="b-k" placeholder="e.g. 3" min="0"/></div>
-        <div><label>p (prob of success)</label><input type="number" id="b-p" placeholder="e.g. 0.4" step="0.01" min="0" max="1"/></div>
-      </div>
-      <button class="calc-btn" onclick="calc('binomial')">Calculate →</button>
-      <div class="result-box" id="b-result"></div>
+  <!-- Normal -->
+  <div id="normal" class="section">
+    <div class="section-header"><div class="section-title">Normal Distribution <span class="course-tag">AST 102 · AST 201</span></div><div class="section-sub">Compute probabilities and z-scores.</div></div>
+    <div class="row"><div><label>Mean (μ)</label><input type="number" id="n-mean" placeholder="0"/></div><div><label>Std Dev (σ)</label><input type="number" id="n-std" placeholder="1" min="0.0001" step="any"/></div></div>
+    <div class="radio-group">
+      <label><input type="radio" name="ntail" value="less" checked onchange="toggleX2()"> P(X &lt; x1)</label>
+      <label><input type="radio" name="ntail" value="greater" onchange="toggleX2()"> P(X &gt; x1)</label>
+      <label><input type="radio" name="ntail" value="between" onchange="toggleX2()"> P(x1 &lt; X &lt; x2)</label>
     </div>
+    <div class="row"><div><label>x1</label><input type="number" id="n-x1" placeholder="1.5" step="any"/></div><div id="x2wrap" style="display:none"><label>x2</label><input type="number" id="n-x2" placeholder="2.5" step="any"/></div></div>
+    <button class="calc-btn" onclick="calc('normal')">Calculate</button>
+    <div class="result-box" id="n-result"></div>
+  </div>
 
-    <!-- 4. Normal -->
-    <div id="normal" class="section">
-      <div class="section-header">
-        <div class="section-title">Normal Distribution <span class="course-tag">AST 102 · AST 201</span></div>
-        <div class="section-sub">Calculate probabilities and z-scores for a Normal distribution.</div>
-      </div>
-      <div class="row">
-        <div><label>Mean (μ)</label><input type="number" id="n-mean" placeholder="e.g. 0"/></div>
-        <div><label>Std Dev (σ)</label><input type="number" id="n-std" placeholder="e.g. 1" min="0.0001" step="any"/></div>
-      </div>
-      <label>Tail / Type</label>
-      <div class="radio-group">
-        <label><input type="radio" name="ntail" value="less" checked onchange="toggleNormal()"> P(X &lt; x1)</label>
-        <label><input type="radio" name="ntail" value="greater" onchange="toggleNormal()"> P(X &gt; x1)</label>
-        <label><input type="radio" name="ntail" value="between" onchange="toggleNormal()"> P(x1 &lt; X &lt; x2)</label>
-      </div>
-      <div class="row" id="n-x-row">
-        <div><label>x1</label><input type="number" id="n-x1" placeholder="e.g. 1.5" step="any"/></div>
-        <div id="n-x2-wrap" style="display:none"><label>x2</label><input type="number" id="n-x2" placeholder="e.g. 2.5" step="any"/></div>
-      </div>
-      <button class="calc-btn" onclick="calc('normal')">Calculate →</button>
-      <div class="result-box" id="n-result"></div>
+  <!-- Linear Regression -->
+  <div id="regression" class="section">
+    <div class="section-header"><div class="section-title">Simple Linear Regression <span class="course-tag">AST 303</span></div><div class="section-sub">Estimates y = b0 + b1x with Pearson r and R².</div></div>
+    <label>X values</label><input type="text" id="r-x" placeholder="e.g. 1, 2, 3, 4, 5"/>
+    <label>Y values</label><input type="text" id="r-y" placeholder="e.g. 2.1, 3.9, 6.2, 7.8, 10.1"/>
+    <button class="calc-btn" onclick="calc('regression')">Calculate</button>
+    <div class="result-box" id="r-result"></div>
+  </div>
+
+  <!-- Correlation Matrix -->
+  <div id="corrmatrix" class="section">
+    <div class="section-header"><div class="section-title">Correlation Matrix <span class="course-tag">AST 307</span></div><div class="section-sub">Enter each variable on a new line, same number of values per line.</div></div>
+    <textarea id="cm-data" placeholder="10 20 30 40 50&#10;5 15 25 35 45&#10;2 8 18 28 38"></textarea>
+    <button class="calc-btn" onclick="calc('corrmatrix')">Calculate</button>
+    <div class="result-box" id="cm-result"></div>
+  </div>
+
+  <!-- Z-Test -->
+  <div id="ztest" class="section">
+    <div class="section-header"><div class="section-title">One-Sample Z-Test <span class="course-tag">AST 203</span></div><div class="section-sub">Tests whether sample mean equals population mean (σ known).</div></div>
+    <div class="row"><div><label>Sample Mean (x̄)</label><input type="number" id="z-xbar" placeholder="52" step="any"/></div><div><label>Population Mean (μ₀)</label><input type="number" id="z-mu" placeholder="50" step="any"/></div></div>
+    <div class="row"><div><label>Population Std Dev (σ)</label><input type="number" id="z-sigma" placeholder="10" step="any"/></div><div><label>Sample Size (n)</label><input type="number" id="z-n" placeholder="30" min="1"/></div></div>
+    <button class="calc-btn" onclick="calc('ztest')">Calculate</button>
+    <div class="result-box" id="z-result"></div>
+  </div>
+
+  <!-- t-Test -->
+  <div id="ttest" class="section">
+    <div class="section-header"><div class="section-title">One-Sample t-Test <span class="course-tag">AST 203</span></div><div class="section-sub">Tests sample mean against hypothesized value (σ unknown).</div></div>
+    <label>Sample Data</label><input type="text" id="t-nums" placeholder="48, 51, 53, 49, 52, 55, 50"/>
+    <label>Hypothesized Mean (μ₀)</label><input type="number" id="t-mu" placeholder="50" step="any"/>
+    <button class="calc-btn" onclick="calc('ttest')">Calculate</button>
+    <div class="result-box" id="t-result"></div>
+  </div>
+
+  <!-- CI -->
+  <div id="ci" class="section">
+    <div class="section-header"><div class="section-title">Confidence Interval <span class="course-tag">AST 203</span></div><div class="section-sub">Constructs a confidence interval for the population mean.</div></div>
+    <label>Sample Data</label><input type="text" id="ci-nums" placeholder="23, 25, 28, 22, 27, 30"/>
+    <div class="radio-group"><label><input type="radio" name="conf" value="90"> 90%</label><label><input type="radio" name="conf" value="95" checked> 95%</label><label><input type="radio" name="conf" value="99"> 99%</label></div>
+    <button class="calc-btn" onclick="calc('ci')">Calculate</button>
+    <div class="result-box" id="ci-result"></div>
+  </div>
+
+  <!-- Index Numbers -->
+  <div id="index" class="section">
+    <div class="section-header"><div class="section-title">Index Numbers <span class="course-tag">AST 106</span></div><div class="section-sub">Price relatives and Laspeyres price index.</div></div>
+    <label>Base Period Prices (P₀)</label><input type="text" id="i-bp" placeholder="10, 20, 15, 8"/>
+    <label>Current Period Prices (Pₙ)</label><input type="text" id="i-cp" placeholder="12, 25, 18, 10"/>
+    <label>Quantities — optional for Laspeyres (Q₀)</label><input type="text" id="i-qty" placeholder="100, 50, 80, 200"/>
+    <button class="calc-btn" onclick="calc('index')">Calculate</button>
+    <div class="result-box" id="i-result"></div>
+  </div>
+
+  <!-- Life Table -->
+  <div id="lifetable" class="section">
+    <div class="section-header"><div class="section-title">Life Table <span class="course-tag">AST 305</span></div><div class="section-sub">Enter the lx column. Computes dx, qx, px for each age.</div></div>
+    <label>lx values (survivors at each age)</label><input type="text" id="lt-lx" placeholder="100000, 98500, 97800, 96000, 93000, 87000"/>
+    <button class="calc-btn" onclick="calc('lifetable')">Calculate</button>
+    <div class="result-box" id="lt-result"></div>
+  </div>
+
+  <!-- Markov Chain -->
+  <div id="markov" class="section">
+    <div class="section-header"><div class="section-title">Markov Chain <span class="course-tag yr4-tag">AST 401</span></div><div class="section-sub">Computes state probabilities after n steps and the steady-state distribution.</div></div>
+    <div class="hint">Enter transition matrix — one row per line, values sum to 1. Example for 2 states:<br>0.7 0.3<br>0.4 0.6</div>
+    <label>Transition Matrix P (one row per line)</label>
+    <textarea id="mk-matrix" placeholder="0.7 0.3&#10;0.4 0.6"></textarea>
+    <div class="row">
+      <div><label>Initial State Vector π₀</label><input type="text" id="mk-init" placeholder="0.5 0.5"/></div>
+      <div><label>Number of Steps</label><input type="number" id="mk-steps" placeholder="5" min="1"/></div>
     </div>
+    <button class="calc-btn" onclick="calc('markov')">Calculate</button>
+    <div class="result-box" id="mk-result"></div>
+  </div>
 
-    <!-- 5. Regression -->
-    <div id="regression" class="section">
-      <div class="section-header">
-        <div class="section-title">Simple Linear Regression <span class="course-tag">AST 303</span></div>
-        <div class="section-sub">Estimates ŷ = b0 + b1·x with Pearson r, R², and standard error.</div>
-      </div>
-      <label>X values (independent)</label>
-      <input type="text" id="r-x" placeholder="e.g. 1, 2, 3, 4, 5"/>
-      <label>Y values (dependent)</label>
-      <input type="text" id="r-y" placeholder="e.g. 2.1, 3.9, 6.2, 7.8, 10.1"/>
-      <button class="calc-btn" onclick="calc('regression')">Calculate →</button>
-      <div class="result-box" id="r-result"></div>
+  <!-- Time Series -->
+  <div id="timeseries" class="section">
+    <div class="section-header"><div class="section-title">Time Series Analysis <span class="course-tag yr4-tag">AST 407</span></div><div class="section-sub">Computes autocorrelation, moving average, and linear trend from time series data.</div></div>
+    <label>Time Series Data (chronological order)</label>
+    <input type="text" id="ts-nums" placeholder="e.g. 120, 135, 148, 162, 155, 170, 183, 195, 210, 225"/>
+    <div class="row">
+      <div><label>Lag for ACF</label><input type="number" id="ts-lag" placeholder="1" min="1"/></div>
+      <div><label>Moving Average Order</label><input type="number" id="ts-ma" placeholder="3" min="1"/></div>
     </div>
+    <button class="calc-btn" onclick="calc('timeseries')">Calculate</button>
+    <div class="result-box" id="ts-result"></div>
+  </div>
 
-    <!-- 6. Correlation Matrix -->
-    <div id="corrmatrix" class="section">
-      <div class="section-header">
-        <div class="section-title">Correlation Matrix <span class="course-tag">AST 307</span></div>
-        <div class="section-sub">Enter each variable on a new line (same number of values per line).</div>
-      </div>
-      <label>Variables (one per line)</label>
-      <textarea id="cm-data" placeholder="e.g.&#10;10 20 30 40 50&#10;5 15 25 35 45&#10;2 8 18 28 38"></textarea>
-      <button class="calc-btn" onclick="calc('corrmatrix')">Calculate →</button>
-      <div class="result-box" id="cm-result"></div>
-    </div>
+  <!-- Logistic Regression -->
+  <div id="logistic" class="section">
+    <div class="section-header"><div class="section-title">Logistic Regression (GLM) <span class="course-tag yr4-tag">AST 408</span></div><div class="section-sub">Binary outcome model. Y must be 0 or 1. Estimates via gradient descent.</div></div>
+    <label>X values (predictor)</label><input type="text" id="lr-x" placeholder="e.g. 1, 2, 3, 4, 5, 6, 7, 8"/>
+    <label>Y values (0 or 1 only)</label><input type="text" id="lr-y" placeholder="e.g. 0, 0, 0, 1, 1, 1, 1, 1"/>
+    <button class="calc-btn" onclick="calc('logistic')">Calculate</button>
+    <div class="result-box" id="lr-result"></div>
+  </div>
 
-    <!-- 7. Z-Test -->
-    <div id="ztest" class="section">
-      <div class="section-header">
-        <div class="section-title">One-Sample Z-Test <span class="course-tag">AST 203</span></div>
-        <div class="section-sub">Tests whether a sample mean equals a known population mean (σ known).</div>
-      </div>
-      <div class="row">
-        <div><label>Sample Mean (x̄)</label><input type="number" id="z-xbar" placeholder="e.g. 52" step="any"/></div>
-        <div><label>Population Mean (μ₀)</label><input type="number" id="z-mu" placeholder="e.g. 50" step="any"/></div>
-      </div>
-      <div class="row">
-        <div><label>Population Std Dev (σ)</label><input type="number" id="z-sigma" placeholder="e.g. 10" step="any" min="0.0001"/></div>
-        <div><label>Sample Size (n)</label><input type="number" id="z-n" placeholder="e.g. 30" min="1"/></div>
-      </div>
-      <button class="calc-btn" onclick="calc('ztest')">Calculate →</button>
-      <div class="result-box" id="z-result"></div>
-    </div>
+  <!-- PCA -->
+  <div id="pca" class="section">
+    <div class="section-header"><div class="section-title">Principal Component Analysis <span class="course-tag yr4-tag">AST 403</span></div><div class="section-sub">Computes covariance matrix and proportion of variance explained by each variable.</div></div>
+    <div class="hint">Enter each variable on a new line with equal number of observations.</div>
+    <label>Variables (one per line)</label>
+    <textarea id="pca-data" placeholder="10 20 30 40 50&#10;5 15 25 35 45&#10;2 8 18 28 38"></textarea>
+    <button class="calc-btn" onclick="calc('pca')">Calculate</button>
+    <div class="result-box" id="pca-result"></div>
+  </div>
 
-    <!-- 8. t-Test -->
-    <div id="ttest" class="section">
-      <div class="section-header">
-        <div class="section-title">One-Sample t-Test <span class="course-tag">AST 203</span></div>
-        <div class="section-sub">Tests whether a sample mean equals a hypothesized value (σ unknown).</div>
-      </div>
-      <label>Sample Data</label>
-      <input type="text" id="t-nums" placeholder="e.g. 48, 51, 53, 49, 52, 55, 50"/>
-      <label>Hypothesized Population Mean (μ₀)</label>
-      <input type="number" id="t-mu" placeholder="e.g. 50" step="any"/>
-      <button class="calc-btn" onclick="calc('ttest')">Calculate →</button>
-      <div class="result-box" id="t-result"></div>
-    </div>
+  <!-- Survival Analysis -->
+  <div id="survival" class="section">
+    <div class="section-header"><div class="section-title">Survival Analysis — Kaplan-Meier <span class="course-tag yr4-tag">AST 405</span></div><div class="section-sub">Estimates the survival function S(t) from censored time-to-event data.</div></div>
+    <div class="hint">Event indicator: 1 = event occurred (death/failure), 0 = censored (lost to follow-up).</div>
+    <label>Survival Times</label><input type="text" id="sv-times" placeholder="e.g. 2, 3, 5, 7, 8, 10, 12, 15"/>
+    <label>Event Indicators (1=event, 0=censored)</label><input type="text" id="sv-events" placeholder="e.g. 1, 1, 0, 1, 1, 0, 1, 1"/>
+    <button class="calc-btn" onclick="calc('survival')">Calculate</button>
+    <div class="result-box" id="sv-result"></div>
+  </div>
 
-    <!-- 9. Confidence Interval -->
-    <div id="ci" class="section">
-      <div class="section-header">
-        <div class="section-title">Confidence Interval <span class="course-tag">AST 203</span></div>
-        <div class="section-sub">Constructs a confidence interval for the population mean.</div>
-      </div>
-      <label>Sample Data</label>
-      <input type="text" id="ci-nums" placeholder="e.g. 23, 25, 28, 22, 27, 30"/>
-      <label>Confidence Level</label>
-      <div class="radio-group">
-        <label><input type="radio" name="conf" value="90"> 90%</label>
-        <label><input type="radio" name="conf" value="95" checked> 95%</label>
-        <label><input type="radio" name="conf" value="99"> 99%</label>
-      </div>
-      <button class="calc-btn" onclick="calc('ci')">Calculate →</button>
-      <div class="result-box" id="ci-result"></div>
-    </div>
+  <!-- OLS Diagnostics -->
+  <div id="ols" class="section">
+    <div class="section-header"><div class="section-title">OLS Regression with Diagnostics <span class="course-tag yr4-tag">AST 404</span></div><div class="section-sub">Full econometric OLS output — SSE, SSR, F-statistic, t-stats, AIC, RMSE and more.</div></div>
+    <label>X values (independent)</label><input type="text" id="ols-x" placeholder="e.g. 1, 2, 3, 4, 5, 6, 7, 8"/>
+    <label>Y values (dependent)</label><input type="text" id="ols-y" placeholder="e.g. 3.1, 5.2, 7.0, 8.9, 11.1, 13.2, 14.8, 17.0"/>
+    <button class="calc-btn" onclick="calc('ols')">Calculate</button>
+    <div class="result-box" id="ols-result"></div>
+  </div>
 
-    <!-- 10. Index Numbers -->
-    <div id="index" class="section">
-      <div class="section-header">
-        <div class="section-title">Index Numbers <span class="course-tag">AST 106</span></div>
-        <div class="section-sub">Simple price relatives and Laspeyres price index (enter quantities for Laspeyres).</div>
-      </div>
-      <label>Base Period Prices (P₀)</label>
-      <input type="text" id="i-bp" placeholder="e.g. 10, 20, 15, 8"/>
-      <label>Current Period Prices (Pₙ)</label>
-      <input type="text" id="i-cp" placeholder="e.g. 12, 25, 18, 10"/>
-      <label>Quantities — optional for Laspeyres (Q₀)</label>
-      <input type="text" id="i-qty" placeholder="e.g. 100, 50, 80, 200"/>
-      <button class="calc-btn" onclick="calc('index')">Calculate →</button>
-      <div class="result-box" id="i-result"></div>
-    </div>
-
-    <!-- 11. Life Table -->
-    <div id="lifetable" class="section">
-      <div class="section-header">
-        <div class="section-title">Life Table (lx) <span class="course-tag">AST 305</span></div>
-        <div class="section-sub">Enter the lx (survivors) column. The table computes dx, qx, and px for each age.</div>
-      </div>
-      <label>lx values — survivors at each age x (comma/space separated)</label>
-      <input type="text" id="lt-lx" placeholder="e.g. 100000, 98500, 97800, 96000, 93000, 87000"/>
-      <button class="calc-btn" onclick="calc('lifetable')">Calculate →</button>
-      <div class="result-box" id="lt-result"></div>
-    </div>
-
-  </div><!-- /main -->
+</div><!-- /main -->
 </div><!-- /layout -->
 
 <script>
 function show(id, btn) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   btn.classList.add('active');
 }
-
-function toggleNormal() {
-  const tail = document.querySelector('input[name="ntail"]:checked').value;
-  document.getElementById('n-x2-wrap').style.display = tail === 'between' ? 'block' : 'none';
+function toggleX2() {
+  document.getElementById('x2wrap').style.display = document.querySelector('input[name="ntail"]:checked').value==='between'?'block':'none';
 }
-
 async function post(payload) {
-  const res = await fetch('/calculate', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)});
+  const res = await fetch('/calculate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
   return res.json();
 }
-
 function renderResult(boxId, data) {
   const box = document.getElementById(boxId);
-  box.className = 'result-box show';
+  box.className='result-box show';
+  if(data.error){box.innerHTML=`<div class="result-error">⚠ ${data.error}</div>`;return;}
 
-  if (data.error) {
-    box.innerHTML = `<div class="result-error">⚠ ${data.error}</div>`; return;
+  // Life table
+  if(data.life_table){
+    let html=`<div class="table-wrap"><table><thead><tr><th>Age x</th><th>lx</th><th>dx</th><th>qx</th><th>px</th></tr></thead><tbody>`;
+    data.life_table.forEach(r=>{html+=`<tr><td>${r.age_x}</td><td>${r.lx.toLocaleString()}</td><td>${r.dx.toLocaleString()}</td><td>${r.qx}</td><td>${r.px}</td></tr>`;});
+    html+=`</tbody></table></div>`;box.innerHTML=html;return;
   }
-
-  // Life table special render
-  if (data.life_table) {
-    const rows = data.life_table;
-    let html = `<div class="table-wrap"><table><thead><tr><th>Age (x)</th><th>lx</th><th>dx</th><th>qx</th><th>px</th></tr></thead><tbody>`;
-    rows.forEach(r => {
-      html += `<tr><td>${r.age_x}</td><td>${r.lx.toLocaleString()}</td><td>${r.dx.toLocaleString()}</td><td>${r.qx}</td><td>${r.px}</td></tr>`;
+  // Correlation matrix / covariance matrix
+  if(data.correlation_matrix||data.covariance_matrix){
+    const mat=data.correlation_matrix||data.covariance_matrix;
+    const label=data.correlation_matrix?'Correlation':'Covariance';
+    const k=mat.length;
+    const color=v=>{const a=Math.abs(v);return a>0.8?'rgba(0,212,170,0.25)':a>0.5?'rgba(0,212,170,0.12)':a>0.2?'rgba(116,185,255,0.08)':'transparent';};
+    let html=`<div class="table-wrap"><table><thead><tr><th>${label}</th>`;
+    for(let i=0;i<k;i++)html+=`<th>V${i+1}</th>`;
+    html+=`</tr></thead><tbody>`;
+    mat.forEach((row,i)=>{html+=`<tr><td><strong>V${i+1}</strong></td>`;row.forEach(v=>{html+=`<td style="background:${color(v)}">${v}</td>`;});html+=`</tr>`;});
+    html+=`</tbody></table></div>`;
+    if(data.proportion_of_variance_percent||data.proportion_of_variance_){
+      const pv=data['proportion_of_variance_%']||data.proportion_of_variance_percent;
+      if(pv)html+=`<div class="result-note">Proportion of variance explained (%): [${pv.join(', ')}]<br>Total variance: ${data.total_variance}</div>`;
+    }
+    if(data.note)html+=`<div class="result-note">${data.note}</div>`;
+    box.innerHTML=html;return;
+  }
+  // Markov chain
+  if(data.markov){
+    const m=data.markov;
+    const n=data.n;
+    let html=`<div class="result-grid">`;
+    html+=`<div class="result-item"><div class="result-label">States</div><div class="result-value">${m.states_n}</div></div>`;
+    html+=`<div class="result-item"><div class="result-label">Steps</div><div class="result-value">${m.steps}</div></div>`;
+    html+=`<div class="result-item" style="grid-column:span 2"><div class="result-label">Steady State Distribution</div><div class="result-value gold">[${data.steady_state.join(', ')}]</div></div>`;
+    html+=`</div>`;
+    html+=`<div class="table-wrap"><table><thead><tr><th>Step</th>`;
+    for(let i=0;i<n;i++)html+=`<th>State ${i+1}</th>`;
+    html+=`</tr></thead><tbody>`;
+    data.history.forEach((h,i)=>{html+=`<tr><td>${i}</td>`;h.forEach(v=>{html+=`<td>${v}</td>`;});html+=`</tr>`;});
+    html+=`</tbody></table></div>`;
+    box.innerHTML=html;return;
+  }
+  // Survival KM table
+  if(data.km_table){
+    let html=`<div class="result-grid">`;
+    html+=`<div class="result-item"><div class="result-label">Total n</div><div class="result-value">${data.n}</div></div>`;
+    html+=`<div class="result-item"><div class="result-label">Total Events</div><div class="result-value red">${data.total_events}</div></div>`;
+    html+=`<div class="result-item"><div class="result-label">Median Survival</div><div class="result-value gold">${data.median_survival}</div></div>`;
+    html+=`</div>`;
+    html+=`<div class="table-wrap"><table><thead><tr><th>Time t</th><th>At Risk</th><th>Events (d)</th><th>S(t)</th></tr></thead><tbody>`;
+    data.km_table.forEach(r=>{html+=`<tr><td>${r.time}</td><td>${r.at_risk}</td><td>${r.events_d}</td><td>${r['survival_S(t)']}</td></tr>`;});
+    html+=`</tbody></table></div>`;
+    box.innerHTML=html;return;
+  }
+  // Price relatives
+  if(data.price_relatives){
+    let html=`<div class="result-grid">`;
+    Object.entries(data).filter(([k])=>k!=='price_relatives').forEach(([k,v])=>{
+      html+=`<div class="result-item"><div class="result-label">${k.replace(/_/g,' ')}</div><div class="result-value ${k.includes('index')||k.includes('inflation')?'gold':''}">${v}</div></div>`;
     });
-    html += `</tbody></table></div>`;
-    box.innerHTML = html; return;
+    html+=`</div><div class="result-note">Price relatives: [${data.price_relatives.join(', ')}]</div>`;
+    box.innerHTML=html;return;
   }
-
-  // Correlation matrix
-  if (data.correlation_matrix) {
-    const mat = data.correlation_matrix;
-    const k = mat.length;
-    const colors = (v) => {
-      const abs = Math.abs(v);
-      if (abs > 0.8) return 'rgba(0,212,170,0.3)';
-      if (abs > 0.5) return 'rgba(0,212,170,0.15)';
-      if (abs > 0.2) return 'rgba(116,185,255,0.1)';
-      return 'transparent';
-    };
-    let html = `<div class="table-wrap"><table><thead><tr><th>Var</th>`;
-    for (let i=0;i<k;i++) html += `<th>V${i+1}</th>`;
-    html += `</tr></thead><tbody>`;
-    mat.forEach((row,i) => {
-      html += `<tr><td><strong>V${i+1}</strong></td>`;
-      row.forEach(v => { html += `<td style="background:${colors(v)}">${v}</td>`; });
-      html += `</tr>`;
-    });
-    html += `</tbody></table></div><div style="margin-top:10px;color:var(--muted);font-size:0.75rem;">n = ${data.n} observations · ${k} variables · Green = strong correlation</div>`;
-    box.innerHTML = html; return;
+  // Time series moving average
+  if(Array.isArray(data[Object.keys(data).find(k=>k.startsWith('moving_average'))])){
+    const maKey=Object.keys(data).find(k=>k.startsWith('moving_average'));
+    const maVals=data[maKey];
+    const eq=data.trend_equation;
+    const items=Object.entries(data).filter(([k])=>!k.startsWith('moving_average')&&k!=='trend_equation');
+    let html=`<div class="result-grid">`;
+    items.forEach(([k,v])=>{html+=`<div class="result-item"><div class="result-label">${k.replace(/_/g,' ')}</div><div class="result-value ${k.includes('autocorr')?'gold':''}">${v}</div></div>`;});
+    html+=`</div>`;
+    if(eq)html+=`<div class="result-eq">Trend: ${eq}</div>`;
+    if(maVals)html+=`<div class="result-note">${maKey.replace(/_/g,' ')}: [${maVals.join(', ')}]</div>`;
+    box.innerHTML=html;return;
   }
-
-  // Price relatives list
-  if (data.price_relatives) {
-    const eq = data.equation;
-    let html = `<div class="result-grid">`;
-    Object.entries(data).filter(([k]) => k !== 'price_relatives' && k !== 'equation' && k !== 'formula').forEach(([k,v]) => {
-      html += `<div class="result-item"><div class="result-label">${k.replace(/_/g,' ')}</div><div class="result-value ${k.includes('index')||k.includes('inflation')?'highlight':''}">${v}</div></div>`;
-    });
-    html += `</div>`;
-    html += `<div style="margin-top:10px;color:var(--muted);font-size:0.78rem;">Price relatives: [${data.price_relatives.join(', ')}]</div>`;
-    if (eq) html += `<div class="result-eq">📐 ${eq}</div>`;
-    box.innerHTML = html; return;
-  }
-
-  // Generic key-value render
-  const eq = data.equation;
-  const formula = data.formula;
-  const interval = data.interval;
-  const items = Object.entries(data).filter(([k]) => !['equation','formula','interval'].includes(k));
-
-  let html = `<div class="result-grid">`;
-  items.forEach(([k,v]) => {
-    let cls = '';
-    if (k.includes('reject')) cls = v.startsWith('Yes') ? 'highlight' : 'red';
-    else if (k.includes('p_value')) cls = parseFloat(v)<0.05 ? 'highlight' : '';
-    else if (['pearson_r','r_squared','mean','slope_b1','P(X=k)','P(X < x)','P(X > x)','P(x1<X<x2)','P(X=k)'].some(x=>k.includes(x.replace(/[()]/g,'')))) cls='highlight';
-    html += `<div class="result-item"><div class="result-label">${k.replace(/_/g,' ')}</div><div class="result-value ${cls}">${v}</div></div>`;
+  // Generic
+  const eq=data.equation;const formula=data.formula;const interval=data.interval;const interp=data.interpretation;const note=data.note;
+  const skip=['equation','formula','interval','interpretation','note'];
+  let html=`<div class="result-grid">`;
+  Object.entries(data).filter(([k])=>!skip.includes(k)).forEach(([k,v])=>{
+    let cls='';
+    if(k.includes('reject'))cls=String(v).startsWith('Yes')?'gold':'red';
+    else if(k.includes('p_value'))cls=parseFloat(v)<0.05?'gold':'';
+    else if(['r_squared','pearson','accuracy','odds','P(X','survival','F_stat'].some(x=>k.includes(x)))cls='gold';
+    html+=`<div class="result-item"><div class="result-label">${k.replace(/_/g,' ')}</div><div class="result-value ${cls}">${v}</div></div>`;
   });
-  html += `</div>`;
-  if (interval) html += `<div class="result-eq">📏 CI: ${interval}</div>`;
-  if (eq) html += `<div class="result-eq">📐 ${eq}</div>`;
-  if (formula) html += `<div class="result-eq">🔢 ${formula}</div>`;
-  box.innerHTML = html;
+  html+=`</div>`;
+  if(interval)html+=`<div class="result-eq">CI: ${interval}</div>`;
+  if(eq)html+=`<div class="result-eq">${eq}</div>`;
+  if(formula)html+=`<div class="result-eq">${formula}</div>`;
+  if(interp)html+=`<div class="result-note">${interp}</div>`;
+  if(note)html+=`<div class="result-note">${note}</div>`;
+  box.innerHTML=html;
 }
-
-async function calc(type) {
-  let payload = {type};
-  try {
-    if (type==='descriptive') payload.numbers = document.getElementById('d-nums').value;
-    else if (type==='permcomb') { payload.n=document.getElementById('pc-n').value; payload.r=document.getElementById('pc-r').value; }
-    else if (type==='binomial') { payload.n=document.getElementById('b-n').value; payload.k=document.getElementById('b-k').value; payload.p=document.getElementById('b-p').value; }
-    else if (type==='normal') { payload.mean=document.getElementById('n-mean').value; payload.std=document.getElementById('n-std').value; payload.x1=document.getElementById('n-x1').value; payload.x2=document.getElementById('n-x2').value; payload.tail=document.querySelector('input[name="ntail"]:checked').value; }
-    else if (type==='regression') { payload.x=document.getElementById('r-x').value; payload.y=document.getElementById('r-y').value; }
-    else if (type==='corrmatrix') { payload.datasets=document.getElementById('cm-data').value; }
-    else if (type==='ztest') { payload.sample_mean=document.getElementById('z-xbar').value; payload.pop_mean=document.getElementById('z-mu').value; payload.pop_std=document.getElementById('z-sigma').value; payload.n=document.getElementById('z-n').value; }
-    else if (type==='ttest') { payload.numbers=document.getElementById('t-nums').value; payload.pop_mean=document.getElementById('t-mu').value; }
-    else if (type==='ci') { payload.numbers=document.getElementById('ci-nums').value; payload.confidence=document.querySelector('input[name="conf"]:checked').value; }
-    else if (type==='index') { payload.base_prices=document.getElementById('i-bp').value; payload.current_prices=document.getElementById('i-cp').value; payload.quantities=document.getElementById('i-qty').value; }
-    else if (type==='lifetable') { payload.lx=document.getElementById('lt-lx').value; }
-
-    const resultId = {descriptive:'d-result',permcomb:'pc-result',binomial:'b-result',normal:'n-result',regression:'r-result',corrmatrix:'cm-result',ztest:'z-result',ttest:'t-result',ci:'ci-result',index:'i-result',lifetable:'lt-result'}[type];
-    const data = await post(payload);
-    renderResult(resultId, data);
-  } catch(e) {
-    console.error(e);
-  }
+async function calc(type){
+  let payload={type};
+  try{
+    if(type==='descriptive')payload.numbers=document.getElementById('d-nums').value;
+    else if(type==='permcomb'){payload.n=document.getElementById('pc-n').value;payload.r=document.getElementById('pc-r').value;}
+    else if(type==='binomial'){payload.n=document.getElementById('b-n').value;payload.k=document.getElementById('b-k').value;payload.p=document.getElementById('b-p').value;}
+    else if(type==='normal'){payload.mean=document.getElementById('n-mean').value;payload.std=document.getElementById('n-std').value;payload.x1=document.getElementById('n-x1').value;payload.x2=document.getElementById('n-x2').value;payload.tail=document.querySelector('input[name="ntail"]:checked').value;}
+    else if(type==='regression'){payload.x=document.getElementById('r-x').value;payload.y=document.getElementById('r-y').value;}
+    else if(type==='corrmatrix')payload.datasets=document.getElementById('cm-data').value;
+    else if(type==='ztest'){payload.sample_mean=document.getElementById('z-xbar').value;payload.pop_mean=document.getElementById('z-mu').value;payload.pop_std=document.getElementById('z-sigma').value;payload.n=document.getElementById('z-n').value;}
+    else if(type==='ttest'){payload.numbers=document.getElementById('t-nums').value;payload.pop_mean=document.getElementById('t-mu').value;}
+    else if(type==='ci'){payload.numbers=document.getElementById('ci-nums').value;payload.confidence=document.querySelector('input[name="conf"]:checked').value;}
+    else if(type==='index'){payload.base_prices=document.getElementById('i-bp').value;payload.current_prices=document.getElementById('i-cp').value;payload.quantities=document.getElementById('i-qty').value;}
+    else if(type==='lifetable')payload.lx=document.getElementById('lt-lx').value;
+    else if(type==='markov'){payload.matrix=document.getElementById('mk-matrix').value;payload.steps=document.getElementById('mk-steps').value;payload.init=document.getElementById('mk-init').value;}
+    else if(type==='timeseries'){payload.numbers=document.getElementById('ts-nums').value;payload.lag=document.getElementById('ts-lag').value;payload.ma_order=document.getElementById('ts-ma').value;}
+    else if(type==='logistic'){payload.x=document.getElementById('lr-x').value;payload.y=document.getElementById('lr-y').value;}
+    else if(type==='pca')payload.datasets=document.getElementById('pca-data').value;
+    else if(type==='survival'){payload.times=document.getElementById('sv-times').value;payload.events=document.getElementById('sv-events').value;}
+    else if(type==='ols'){payload.x=document.getElementById('ols-x').value;payload.y=document.getElementById('ols-y').value;}
+    const ids={descriptive:'d-result',permcomb:'pc-result',binomial:'b-result',normal:'n-result',regression:'r-result',corrmatrix:'cm-result',ztest:'z-result',ttest:'t-result',ci:'ci-result',index:'i-result',lifetable:'lt-result',markov:'mk-result',timeseries:'ts-result',logistic:'lr-result',pca:'pca-result',survival:'sv-result',ols:'ols-result'};
+    const data=await post(payload);
+    renderResult(ids[type],data);
+  }catch(e){console.error(e);}
 }
-
-// Enter key support
-document.addEventListener('keydown', e => {
-  if (e.key==='Enter') {
-    const active = document.querySelector('.section.active');
-    const btn = active?.querySelector('.calc-btn');
-    if (btn) btn.click();
-  }
-});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'){const btn=document.querySelector('.section.active .calc-btn');if(btn)btn.click();}});
 </script>
 </body>
 </html>
