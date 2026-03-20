@@ -492,14 +492,13 @@ async function showPlot(type, boxId) {
   box.className = 'plot-box show';
   try {
     const res = await fetch('/plot', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)});
-    const data = await res.json();
+    const text = await res.text();
+    let data;
+    try { data = JSON.parse(text); }
+    catch(e) { box.innerHTML = `<div class="result-error">Server error — check Render logs.<br><small>${text.substring(0,200)}</small></div>`; return; }
     if (data.error) { box.innerHTML = `<div class="result-error">Chart error: ${data.error}</div>`; return; }
     let figData;
-    if (typeof data.plot === 'string') {
-      figData = JSON.parse(data.plot);
-    } else {
-      figData = data.plot;
-    }
+    if (typeof data.plot === 'string') { figData = JSON.parse(data.plot); } else { figData = data.plot; }
     Plotly.react(box, figData.data, figData.layout, {responsive: true, displayModeBar: true, scrollZoom: true});
   } catch(e) { box.innerHTML = `<div class="result-error">Chart failed: ${e}</div>`; }
 }

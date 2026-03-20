@@ -1,10 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 import statistics
 import math
-import json
-import plotly
-import plotly.graph_objects as go
-from plotly.subplots import make_subplots
 
 
 app = Flask(__name__)
@@ -516,15 +512,21 @@ PLOT_THEME = dict(
 )
 
 def fig_json(fig):
+    import plotly.graph_objects as go
     fig.update_layout(**PLOT_THEME)
     fig.update_xaxes(gridcolor='#252c3a', zerolinecolor='#252c3a')
     fig.update_yaxes(gridcolor='#252c3a', zerolinecolor='#252c3a')
-    return fig.to_json()
+    try:
+        return fig.to_json()
+    except Exception:
+        import json
+        return json.dumps({"data": [], "layout": {}})
 
 @app.route("/plot", methods=["POST"])
 def plot():
     import plotly.graph_objects as go
-    from plotly.subplots import make_subplots
+    import plotly.subplots as ps
+    make_subplots = ps.make_subplots
     data = request.get_json()
     t = data.get("type")
     try:
@@ -707,6 +709,6 @@ def plot():
             fig.update_layout(title=f"{stat_name}-Test",xaxis_title=stat_name,yaxis_title="Density")
             return jsonify({"plot": fig_json(fig)})
 
-        return jsonify({"error": "No plot available for this type."})
+        return jsonify({"error": f"No plot for type: {t}"})
     except Exception as e:
         return jsonify({"error": str(e)})
