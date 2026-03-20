@@ -494,8 +494,13 @@ async function showPlot(type, boxId) {
     const res = await fetch('/plot', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)});
     const data = await res.json();
     if (data.error) { box.innerHTML = `<div class="result-error">Chart error: ${data.error}</div>`; return; }
-    const fig = JSON.parse(data.plot);
-    Plotly.react(box, fig.data, fig.layout, {responsive: true, displayModeBar: true});
+    let figData;
+    if (typeof data.plot === 'string') {
+      figData = JSON.parse(data.plot);
+    } else {
+      figData = data.plot;
+    }
+    Plotly.react(box, figData.data, figData.layout, {responsive: true, displayModeBar: true, scrollZoom: true});
   } catch(e) { box.innerHTML = `<div class="result-error">Chart failed: ${e}</div>`; }
 }
 
