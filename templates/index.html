@@ -71,7 +71,13 @@ tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
   .row,.row3{grid-template-columns:1fr;}
   .main{padding:16px;}
 }
+
+.plot-box{margin-top:16px;display:none;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;overflow:hidden;}
+.plot-box.show{display:block;animation:fadeIn 0.4s ease;}
+.plot-btn{background:rgba(116,185,255,0.1);border:1px solid rgba(116,185,255,0.25);border-radius:9px;padding:9px 20px;color:var(--accent4);font-family:'Outfit',sans-serif;font-weight:600;font-size:0.85rem;cursor:pointer;transition:all 0.2s;margin-top:10px;margin-left:8px;}
+.plot-btn:hover{background:rgba(116,185,255,0.2);}
 </style>
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
 </head>
 <body>
 <div class="header">
@@ -119,6 +125,8 @@ tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
     <input type="text" id="d-nums" placeholder="e.g. 12, 15, 18, 22, 25, 30, 14, 19"/>
     <button class="calc-btn" onclick="calc('descriptive')">Calculate</button>
     <div class="result-box" id="d-result"></div>
+    <button class="plot-btn" onclick="showPlot('descriptive','d-plot')">Show Plot</button>
+    <div class="plot-box" id="d-plot"></div>
   </div>
 
   <!-- Perm & Comb -->
@@ -142,6 +150,8 @@ tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
     </div>
     <button class="calc-btn" onclick="calc('binomial')">Calculate</button>
     <div class="result-box" id="b-result"></div>
+    <button class="plot-btn" onclick="showPlot('binomial','b-plot')">Show Plot</button>
+    <div class="plot-box" id="b-plot"></div>
   </div>
 
   <!-- Normal -->
@@ -156,6 +166,8 @@ tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
     <div class="row"><div><label>x1</label><input type="number" id="n-x1" placeholder="1.5" step="any"/></div><div id="x2wrap" style="display:none"><label>x2</label><input type="number" id="n-x2" placeholder="2.5" step="any"/></div></div>
     <button class="calc-btn" onclick="calc('normal')">Calculate</button>
     <div class="result-box" id="n-result"></div>
+    <button class="plot-btn" onclick="showPlot('normal','n-plot')">Show Plot</button>
+    <div class="plot-box" id="n-plot"></div>
   </div>
 
   <!-- Linear Regression -->
@@ -165,6 +177,8 @@ tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
     <label>Y values</label><input type="text" id="r-y" placeholder="e.g. 2.1, 3.9, 6.2, 7.8, 10.1"/>
     <button class="calc-btn" onclick="calc('regression')">Calculate</button>
     <div class="result-box" id="r-result"></div>
+    <button class="plot-btn" onclick="showPlot('regression','r-plot')">Show Plot</button>
+    <div class="plot-box" id="r-plot"></div>
   </div>
 
   <!-- Correlation Matrix -->
@@ -173,6 +187,8 @@ tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
     <textarea id="cm-data" placeholder="10 20 30 40 50&#10;5 15 25 35 45&#10;2 8 18 28 38"></textarea>
     <button class="calc-btn" onclick="calc('corrmatrix')">Calculate</button>
     <div class="result-box" id="cm-result"></div>
+    <button class="plot-btn" onclick="showPlot('corrmatrix','cm-plot')">Show Plot</button>
+    <div class="plot-box" id="cm-plot"></div>
   </div>
 
   <!-- Z-Test -->
@@ -182,6 +198,8 @@ tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
     <div class="row"><div><label>Population Std Dev (σ)</label><input type="number" id="z-sigma" placeholder="10" step="any"/></div><div><label>Sample Size (n)</label><input type="number" id="z-n" placeholder="30" min="1"/></div></div>
     <button class="calc-btn" onclick="calc('ztest')">Calculate</button>
     <div class="result-box" id="z-result"></div>
+    <button class="plot-btn" onclick="showPlot('ztest','z-plot')">Show Plot</button>
+    <div class="plot-box" id="z-plot"></div>
   </div>
 
   <!-- t-Test -->
@@ -191,6 +209,8 @@ tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
     <label>Hypothesized Mean (μ₀)</label><input type="number" id="t-mu" placeholder="50" step="any"/>
     <button class="calc-btn" onclick="calc('ttest')">Calculate</button>
     <div class="result-box" id="t-result"></div>
+    <button class="plot-btn" onclick="showPlot('ttest','t-plot')">Show Plot</button>
+    <div class="plot-box" id="t-plot"></div>
   </div>
 
   <!-- CI -->
@@ -200,6 +220,8 @@ tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
     <div class="radio-group"><label><input type="radio" name="conf" value="90"> 90%</label><label><input type="radio" name="conf" value="95" checked> 95%</label><label><input type="radio" name="conf" value="99"> 99%</label></div>
     <button class="calc-btn" onclick="calc('ci')">Calculate</button>
     <div class="result-box" id="ci-result"></div>
+    <button class="plot-btn" onclick="showPlot('ci','ci-plot')">Show Plot</button>
+    <div class="plot-box" id="ci-plot"></div>
   </div>
 
   <!-- Index Numbers -->
@@ -210,6 +232,8 @@ tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
     <label>Quantities — optional for Laspeyres (Q₀)</label><input type="text" id="i-qty" placeholder="100, 50, 80, 200"/>
     <button class="calc-btn" onclick="calc('index')">Calculate</button>
     <div class="result-box" id="i-result"></div>
+    <button class="plot-btn" onclick="showPlot('index','i-plot')">Show Plot</button>
+    <div class="plot-box" id="i-plot"></div>
   </div>
 
   <!-- Life Table -->
@@ -218,6 +242,8 @@ tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
     <label>lx values (survivors at each age)</label><input type="text" id="lt-lx" placeholder="100000, 98500, 97800, 96000, 93000, 87000"/>
     <button class="calc-btn" onclick="calc('lifetable')">Calculate</button>
     <div class="result-box" id="lt-result"></div>
+    <button class="plot-btn" onclick="showPlot('lifetable','lt-plot')">Show Plot</button>
+    <div class="plot-box" id="lt-plot"></div>
   </div>
 
   <!-- Markov Chain -->
@@ -232,6 +258,8 @@ tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
     </div>
     <button class="calc-btn" onclick="calc('markov')">Calculate</button>
     <div class="result-box" id="mk-result"></div>
+    <button class="plot-btn" onclick="showPlot('markov','mk-plot')">Show Plot</button>
+    <div class="plot-box" id="mk-plot"></div>
   </div>
 
   <!-- Time Series -->
@@ -245,6 +273,8 @@ tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
     </div>
     <button class="calc-btn" onclick="calc('timeseries')">Calculate</button>
     <div class="result-box" id="ts-result"></div>
+    <button class="plot-btn" onclick="showPlot('timeseries','ts-plot')">Show Plot</button>
+    <div class="plot-box" id="ts-plot"></div>
   </div>
 
   <!-- Logistic Regression -->
@@ -254,6 +284,8 @@ tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
     <label>Y values (0 or 1 only)</label><input type="text" id="lr-y" placeholder="e.g. 0, 0, 0, 1, 1, 1, 1, 1"/>
     <button class="calc-btn" onclick="calc('logistic')">Calculate</button>
     <div class="result-box" id="lr-result"></div>
+    <button class="plot-btn" onclick="showPlot('logistic','lr-plot')">Show Plot</button>
+    <div class="plot-box" id="lr-plot"></div>
   </div>
 
   <!-- PCA -->
@@ -264,6 +296,8 @@ tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
     <textarea id="pca-data" placeholder="10 20 30 40 50&#10;5 15 25 35 45&#10;2 8 18 28 38"></textarea>
     <button class="calc-btn" onclick="calc('pca')">Calculate</button>
     <div class="result-box" id="pca-result"></div>
+    <button class="plot-btn" onclick="showPlot('pca','pca-plot')">Show Plot</button>
+    <div class="plot-box" id="pca-plot"></div>
   </div>
 
   <!-- Survival Analysis -->
@@ -274,6 +308,8 @@ tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
     <label>Event Indicators (1=event, 0=censored)</label><input type="text" id="sv-events" placeholder="e.g. 1, 1, 0, 1, 1, 0, 1, 1"/>
     <button class="calc-btn" onclick="calc('survival')">Calculate</button>
     <div class="result-box" id="sv-result"></div>
+    <button class="plot-btn" onclick="showPlot('survival','sv-plot')">Show Plot</button>
+    <div class="plot-box" id="sv-plot"></div>
   </div>
 
   <!-- OLS Diagnostics -->
@@ -283,6 +319,8 @@ tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
     <label>Y values (dependent)</label><input type="text" id="ols-y" placeholder="e.g. 3.1, 5.2, 7.0, 8.9, 11.1, 13.2, 14.8, 17.0"/>
     <button class="calc-btn" onclick="calc('ols')">Calculate</button>
     <div class="result-box" id="ols-result"></div>
+    <button class="plot-btn" onclick="showPlot('ols','ols-plot')">Show Plot</button>
+    <div class="plot-box" id="ols-plot"></div>
   </div>
 
 </div><!-- /main -->
@@ -433,10 +471,34 @@ async function calc(type){
     else if(type==='survival'){payload.times=document.getElementById('sv-times').value;payload.events=document.getElementById('sv-events').value;}
     else if(type==='ols'){payload.x=document.getElementById('ols-x').value;payload.y=document.getElementById('ols-y').value;}
     const ids={descriptive:'d-result',permcomb:'pc-result',binomial:'b-result',normal:'n-result',regression:'r-result',corrmatrix:'cm-result',ztest:'z-result',ttest:'t-result',ci:'ci-result',index:'i-result',lifetable:'lt-result',markov:'mk-result',timeseries:'ts-result',logistic:'lr-result',pca:'pca-result',survival:'sv-result',ols:'ols-result'};
+    lastPayload[type]=payload;
     const data=await post(payload);
     renderResult(ids[type],data);
+    // show plot button
+    const plotBoxId=ids[type].replace('-result','-plot');
+    const pbox=document.getElementById(plotBoxId);
+    if(pbox){pbox.className='plot-box';pbox.innerHTML='';}
   }catch(e){console.error(e);}
 }
+
+// Store last payload per section
+const lastPayload = {};
+
+async function showPlot(type, boxId) {
+  const payload = lastPayload[type];
+  if (!payload) return;
+  const box = document.getElementById(boxId);
+  box.innerHTML = '<div style="color:var(--muted);padding:20px;text-align:center;">Loading chart...</div>';
+  box.className = 'plot-box show';
+  try {
+    const res = await fetch('/plot', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)});
+    const data = await res.json();
+    if (data.error) { box.innerHTML = `<div class="result-error">Chart error: ${data.error}</div>`; return; }
+    const fig = JSON.parse(data.plot);
+    Plotly.newPlot(box, fig.data, fig.layout, {responsive: true, displayModeBar: true});
+  } catch(e) { box.innerHTML = `<div class="result-error">Chart failed: ${e}</div>`; }
+}
+
 document.addEventListener('keydown',e=>{if(e.key==='Enter'){const btn=document.querySelector('.section.active .calc-btn');if(btn)btn.click();}});
 </script>
 </body>
