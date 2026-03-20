@@ -516,11 +516,10 @@ PLOT_THEME = dict(
 )
 
 def fig_json(fig):
-    import plotly, json
     fig.update_layout(**PLOT_THEME)
     fig.update_xaxes(gridcolor='#252c3a', zerolinecolor='#252c3a')
     fig.update_yaxes(gridcolor='#252c3a', zerolinecolor='#252c3a')
-    return json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    return fig.to_json()
 
 @app.route("/plot", methods=["POST"])
 def plot():

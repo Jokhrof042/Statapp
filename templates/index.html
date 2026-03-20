@@ -495,7 +495,7 @@ async function showPlot(type, boxId) {
     const data = await res.json();
     if (data.error) { box.innerHTML = `<div class="result-error">Chart error: ${data.error}</div>`; return; }
     const fig = JSON.parse(data.plot);
-    Plotly.newPlot(box, fig.data, fig.layout, {responsive: true, displayModeBar: true});
+    Plotly.react(box, fig.data, fig.layout, {responsive: true, displayModeBar: true});
   } catch(e) { box.innerHTML = `<div class="result-error">Chart failed: ${e}</div>`; }
 }
 
